@@ -37,25 +37,6 @@ istream& PACK::operator>>(istream & in, pack& p) {
     return in;
 }
 
-pack* PACK::load(int & count) {
-    ifstream in("packages.txt");
-    if (!in.is_open())
-        return nullptr;
-
-    string ex;
-    getline(in, ex);
-    count = stoi(ex);
-    if (count < 1)
-        return nullptr;
-
-    pack* arr = new pack[count];
-    for (int i = 0; i < count; i++)
-        in >> arr[i];
-
-    in.close();
-    return arr;
-}
-
 pack* PACK::create(int & count) {
     count = 1;
     pack* arr = new pack[count];
@@ -130,6 +111,7 @@ void PACK::del(pack* arr, int* count) {
         arr[i] = arr[i + 1];
     }
     (*count)--;
+    cout << "Посылка удалена." << endl;
 }
 
 void PACK::edit(pack *arr, int count) {
