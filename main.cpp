@@ -5,42 +5,37 @@ int main() {
     post post;
     pack *arr = nullptr;
     int count = 0;
-    arr = load(count);
     int a;
     do {
-        cout << ("1. загрузить посылку\n") << endl;
-        cout << ("2. Показать список посылок\n") << endl;
-        cout << ("3. добавить посылку\n") << endl;
-        cout << ("4. Удалить посылку\n") << endl;
-        cout << ("5. Изменить данные посылки\n") << endl;
-        cout << ("6. Найти посылку\n") << endl;
-        cout << ("7. Показать список отделений\n") << endl;
-        cout << ("8. Добывить отделение\n") << endl;
-        cout << ("0. выйти\n") << endl;
+        cout << ("1. Показать список посылок\n") << endl;
+        cout << ("2. добавить посылку\n") << endl;
+        cout << ("3. Удалить посылку\n") << endl;
+        cout << ("4. Изменить данные посылки\n") << endl;
+        cout << ("5. Найти посылку\n") << endl;
+        cout << ("6. Показать список отделений\n") << endl;
+        cout << ("7. Добавить отделение\n") << endl;
+        cout << ("0. Выйти\n") << endl;
         cin >> a;
         switch (a) {
         case 1:
-            arr = create(count);
-            break;
-        case 2:
             showList(arr, count);
             break;
-        case 3:
+        case 2:
             add(&arr, &count);
             break;
-        case 4:
+        case 3:
             del(arr, &count);
             break;
-        case 5:
+        case 4:
             edit(arr, count);
             break;
-        case 6:
+        case 5:
             search(arr, count);
             break;
-        case 7:
+        case 6:
             post.display();
             break;
-        case 8:
+        case 7:
             post.addpost();
             break;
         case 0:
