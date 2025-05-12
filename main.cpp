@@ -8,7 +8,6 @@ int main() {
     arr = load(count);
     int a;
     do {
-        cout << ("Список посылок\n") << endl;
         cout << ("1. загрузить посылку\n") << endl;
         cout << ("2. Показать список посылок\n") << endl;
         cout << ("3. добавить посылку\n") << endl;
