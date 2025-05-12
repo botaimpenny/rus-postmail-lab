@@ -3,6 +3,7 @@
 #include <iostream>
 using namespace std;
 using namespace PACK;
+
 string pack::getname() {
     return _getname;
 }
@@ -18,44 +19,50 @@ string pack::to() {
 int pack::id() {
     return _id;
 }
-int pack::weight(){
+int pack::weight() {
     return _weight;
 }
 
-//operator
-pack::pack(string sendname, string getname, string from, string to, int id, int weight) : _sendname(sendname), _getname(getname), _from(from), _to(to), _id(id), _weight(weight) {}
-ostream& PACK::operator << (ostream & out, const pack& p) {
-    out << p._sendname << " " << p._getname << " " << p._from << " " << p._to << " " << p._id << " " << p._weight<< endl;
+pack::pack(string sendname, string getname, string from, string to, int id, int weight) 
+    : _sendname(sendname), _getname(getname), _from(from), _to(to), _id(id), _weight(weight) {}
+
+// Перегрузка операторов
+ostream& PACK::operator<<(ostream & out, const pack& p) {
+    out << p._sendname << " " << p._getname << " " << p._from << " " << p._to << " " << p._id << " " << p._weight;
     return out;
 }
-istream& PACK::operator >> (istream & in, pack& p) {
+
+istream& PACK::operator>>(istream & in, pack& p) {
     in >> p._sendname >> p._getname >> p._from >> p._to >> p._id >> p._weight;
     return in;
 }
 
-pack * PACK::load(int & count) {
+pack* PACK::load(int & count) {
     ifstream in("packages.txt");
     if (!in.is_open())
         return nullptr;
+
     string ex;
-    getline(in,ex);
-    count=stoi(ex);
+    getline(in, ex);
+    count = stoi(ex);
     if (count < 1)
         return nullptr;
-    pack *arr = new pack[count];
+
+    pack* arr = new pack[count];
     for (int i = 0; i < count; i++)
         in >> arr[i];
+
     in.close();
     return arr;
 }
 
-pack * PACK::create(int & count) {
+pack* PACK::create(int & count) {
     count = 1;
     pack* arr = new pack[count];
     return arr;
 }
 
-void PACK::save(pack *arr, int count) {
+void PACK::save(pack* arr, int count) {
     ofstream out("packages.txt");
     out << count << endl;
     for (int i = 0; i < count; i++) {
@@ -63,6 +70,7 @@ void PACK::save(pack *arr, int count) {
     }
     out.close();
 }
+
 void PACK::add(pack** arr, int* count) {
     pack* temp = new (nothrow) pack[*count + 1];
     if (temp == nullptr) {
@@ -72,13 +80,11 @@ void PACK::add(pack** arr, int* count) {
     for (int i = 0; i < *count; i++) {
         temp[i] = (*arr)[i];
     }
-    string sendname;
-    string getname;
-    string from;
-    string to;
-    int id;
-    int weight;
-    cout << "Введите имя отправителя поссылки: " << endl;
+
+    string sendname, getname, from, to;
+    int id, weight;
+
+    cout << "Введите имя отправителя посылки: " << endl;
     cin >> sendname;
     cout << "Введите имя получателя посылки: " << endl;
     cin >> getname;
@@ -97,56 +103,86 @@ void PACK::add(pack** arr, int* count) {
     temp[*count].setTo(to);
     temp[*count].setId(id);
     temp[*count].setWeight(weight);
+
     delete[] * arr;
     *arr = temp;
     (*count)++;
 }
 
-void PACK::del(pack *arr, int *count) {
+void PACK::del(pack* arr, int* count) {
     int n = 0;
     cout << "Введите трек номер посылки: " << endl;
     cin >> n;
-    if (n < 0, n >= (*count+1)) {
+    int index = -1;
+    for (int i = 0; i < *count; i++) {
+        if (arr[i].id() == n) {
+            index = i;
+            break;
+        }
+    }
+
+    if (index == -1) {
         cout << "Такого трек номера не существует " << endl;
         return;
     }
 
-    for (int i = (n-1); i < *count - 1; i++) {
+    for (int i = index; i < *count - 1; i++) {
         arr[i] = arr[i + 1];
     }
     (*count)--;
 }
 
-//#6
 void PACK::edit(pack *arr, int count) {
     int n = 0;
-    cout << "Введите трек номер посылки " << endl;
+    cout << "Введите трек номер посылки для редактирования: " << endl;
     cin >> n;
-    if (n < 0, n >= (count + 1)) {
+
+    // Теперь ищет действительно по айди, а не по индексу в файле
+    int index = -1;
+    for (int i = 0; i < count; i++) {
+        if (arr[i].id() == n) {
+            index = i;
+            break;
+        }
+    }
+
+    if (index == -1) {
         cout << "Такого трек номера не существует " << endl;
         return;
     }
-    string temp = "";
+    
+string temp;
     cout << "Введите новое имя отправителя: " << endl;
     cin >> temp;
-    arr[n-1].setSendname(temp);
+    arr[index].setSendname(temp);
     cout << "Введите новое имя получателя: " << endl;
     cin >> temp;
-    arr[n-1].setGetname(temp);
+    arr[index].setGetname(temp);
     cout << "Введите новое отделение почты, откуда едет посылка: " << endl;
     cin >> temp;
-    arr[n-1].setFrom(temp);
-    cout<< "Введите новое отделение почты, куда едет посылка: " << endl;
+    arr[index].setFrom(temp);
+    cout << "Введите новое отделение почты, куда едет посылка: " << endl;
     cin >> temp;
-    arr[n-1].setTo(temp);
+    arr[index].setTo(temp);
     int id = 0;
     cout << "Введите новый трек номер посылки: " << endl;
     cin >> id;
-    arr[n-1].setId(id);
+    arr[index].setId(id);
     int weight = 0;
     cout << "Укажите новый вес посылки: " << endl;
     cin >> weight;
-    arr[n-1].setWeight(weight);
+    arr[index].setWeight(weight);
+    // | сделал функцию записи в файл прям здесь, если надо меняйте, я задолбался,аахахах
+    ofstream outFile("packages.txt");
+    if (outFile.is_open()) {
+        for (int i = 0; i < count; i++) {
+            outFile << arr[i] << endl;
+ }
+        outFile.close();
+    }
+    else {
+        cout << "Не удалось открыть файл для записи." << endl;
+    }
 }
 
 void PACK::search(pack* arr, int count) {
@@ -170,45 +206,50 @@ void PACK::showList(pack* arr, int count) {
         cout << i+1 << ". " << arr[i] << endl;
     }
 }
-void post::display(){
+
+void post::display() {
     string line;
     ifstream file("posts.txt");
-    if(file.is_open()){
-        int n=1;
-        while(getline (file, line)){
+    if (file.is_open()) {
+        int n = 1;
+        while (getline(file, line)) {
             cout << n << "." << line << endl;
-            n+=1;
+            n++;
         }
         file.close();
         return;
-    }
-    else{
+    } else {
         cout << "Cant open file" << endl;
         return;
     }
 }
-void post::addpost(){
+
+void post::addpost() {
     int num;
     cout << "Введите координату х нового почтового отделения: ";
-        cin >> _x;
-        cout << "Введите координату у нового почтового отделения: ";
-        cin >> _y;
-        cout << "Сколько посылок уже находятся в новом почтовом отделении?: ";
-        int n;
-        cin >> n;
-        for(int i = 0; i<n; i++){
-            cout << "Введите трекномер: ";
-            cin >> num;
-            _packs.push_back(num);
-        }
-        ofstream file("posts.txt", ios::app);
-        if (file.is_open()){
-            file << _x << " " << _y << " ";
-            for(int trak : _packs){
-                file << trak << " ";
-            }
-        }
+    cin >> _x;
+    cout << "Введите координату у нового почтового отделения: ";
+    cin >> _y;
+    cout << "Сколько посылок уже находятся в новом почтовом отделении?: ";
+    int n;
+    cin >> n;
+    for (int i = 0; i < n; i++) {
+        cout << "Введите трекномер: ";
+        cin >> num;
+        _packs.push_back(num);
     }
-void post::delpost(){
+    ofstream file("posts.txt", ios::app);
+    if (file.is_open()) {
+        file << _x << " " << _y << " ";
+        for (int trak : _packs) {
+            file << trak << " ";
+        }
+        file << endl;
+        file.close();
+    }
+}
+
+void post::delpost() {
 
 }
+
