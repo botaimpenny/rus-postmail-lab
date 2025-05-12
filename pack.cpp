@@ -186,6 +186,7 @@ void PACK::showList(pack* arr, int count) {
     cout << "Список посылок:" << endl;
     for (int i = 0; i < count; i++) {
         cout << i+1 << ". " << arr[i] << endl;
+        cout << "-------------------" << endl;
     }
 }
 
