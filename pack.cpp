@@ -271,9 +271,7 @@ ofstream file("posts.txt", ios::app);
         cout << "Не удалось открыть файл для записи." << endl;
     }
 }
-void post::delpost() {
 
-}
 double PACK::post::distance(pack* arr, int count){
         ifstream file("packs.txt");
         if (file.is_open()) {
@@ -324,4 +322,48 @@ double PACK::post::distance(pack* arr, int count){
         }
     }
 
+void post::delpost() {
+    int count = 0;
+    int index;
+    ifstream file("posts.txt");
+    if (file.is_open()) {
+        while (file >> index >> _x >> _y) {
+            count++;
+        }
+    }
+    else{
+        cout << "Ошибка: Невозможно открыть файл" << endl;
+    }
+    post *arr = new post[count];
+    cout << "-------------------------------" << endl;
+    ifstream f("posts.txt");
+    if (f.is_open()){
+        for(int i = 1; i < count+1; i++){
+            f >> index >> _x >> _y;
+            cout << i << ")" << "Индекс почтового отделения:  " << index << "Координата по Х: " << _x << "Координата по У: " << _y << " " << endl;
+        }
+}
+    else{
+        cout << "Ошибка: Невозможно открыть файл почтовых отделений" << endl;
+    }
+    f.close();
+    file.close();
+    cout << "-------------------------------" <<endl;
+    cout << "Укажите номер почтового отделения для удаления: ";
+    int num;
+    cin >> num;
+    ofstream file1("posts.txt");
+    if (file1.is_open()){
+        for(int i = 0; i < count; i++){
+            if(i == num){
+            }
 
+      else{
+    file1 << index << " " << _x << " " << _y << " " << "\n";
+            }
+        }
+    }
+    else{
+        cout << "Ошибка: Невозможно открыть файл" << endl;
+    }
+}
