@@ -234,7 +234,7 @@ void PACK::search(pack* arr, int count) {
     }
     default:{
         break;
-}
+}}}
 
 void PACK::showList(pack* arr, int count) {
     cout << "Список посылок:" << endl;
