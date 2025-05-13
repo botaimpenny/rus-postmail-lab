@@ -55,5 +55,6 @@ void del(pack *arr, int *count);
 void edit(pack *arr, int count);
 void search(pack *arr, int count);
 void showList(pack *arr, int count);
+void give(pack* arr, int* count);
 
 }
