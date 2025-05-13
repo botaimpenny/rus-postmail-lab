@@ -276,7 +276,3 @@ void post::delpost() {
 }
 
 
-void post::delpost() {
-
-}
-
