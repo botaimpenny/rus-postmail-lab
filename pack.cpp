@@ -199,16 +199,33 @@ void post::display() {
     string line;
     ifstream file("posts.txt");
     if (file.is_open()) {
-        int n = 1;
+    int n = 1;
         while (getline(file, line)) {
-            cout << n << "." << line << endl;
+            istringstream iss(line);      
+            int index, x, y;
+            vector<int> packs;
+            iss >> index >> x >> y;
+            int trak;
+            while (iss >> trak) {
+                packs.push_back(trak);
+            }
+            cout << n << ". Индекс почтового отделения: " << index << ", "
+                 << "Координата X: " << x << ", "
+                 << "Координата Y: " << y << ", "
+                 << "Трек номера посылок: ";
+            for (size_t i = 0; i < packs.size(); i++) {
+                cout << packs[i];
+                if (i < packs.size() - 1) {
+                    cout << ", ";
+                }
+            }
+            cout << endl; 
             n++;
         }
+         cout << "---------------" << endl;
         file.close();
-        return;
     } else {
-        cout << "Cant open file" << endl;
-        return;
+        cout << "Не удалось открыть файл." << endl;
     }
 }
 
