@@ -29,6 +29,7 @@ public:
     void setId(int id) { _id = id; }
 };
 class post {
+    std::string _name;
     int _x;//Координата отделения по х
     int _y;//Координата отделения по у
     std::vector <int> _packs;//Список посылок внутри отделения
@@ -40,6 +41,7 @@ public:
     void display();
     void delpost();
     void addpost();
+    double distance(pack* arr, int count);
 
 };
 
