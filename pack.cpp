@@ -12,10 +12,10 @@ string pack::getname() {
 string pack::sendname() {
     return _sendname;
 }
-string pack::from() {
+int pack::from() {
     return _from;
 }
-string pack::to() {
+int pack::to() {
     return _to;
 }
 int pack::id() {
@@ -40,7 +40,7 @@ pack* PACK::load(int &count) {
     return arr; 
 }
 
-pack::pack(string sendname, string getname, string from, string to, int id, int weight) 
+pack::pack(string sendname, string getname, int from, int to, int id, int weight) 
     : _sendname(sendname), _getname(getname), _from(from), _to(to), _id(id), _weight(weight) {}
 
 ostream& PACK::operator<<(ostream & out, const pack& p) {
@@ -83,8 +83,8 @@ void PACK::add(pack** arr, int* count) {
         temp[i] = (*arr)[i];
     }
 
-    string sendname, getname, from, to;
-    int id, weight;
+    string sendname, getname;
+    int from, to, id, weight;
 
     cout << "Введите имя отправителя посылки: " << endl;
     cin >> sendname;
@@ -161,12 +161,14 @@ string temp;
     cout << "Введите новое имя получателя: " << endl;
     cin >> temp;
     arr[index].setGetname(temp);
+    int from = 0
     cout << "Введите новое отделение почты, откуда едет посылка: " << endl;
-    cin >> temp;
-    arr[index].setFrom(temp);
+    cin >> from;
+    arr[index].setFrom(from);
+    int to = 0
     cout << "Введите новое отделение почты, куда едет посылка: " << endl;
-    cin >> temp;
-    arr[index].setTo(temp);
+    cin >> to;
+    arr[index].setTo(to);
     int id = 0;
     cout << "Введите новый трек номер посылки: " << endl;
     cin >> id;
@@ -312,8 +314,8 @@ double PACK::post::distance(pack* arr, int count){
             int y1 = 0;
             int x2 = 0;
             int y2 = 0;
-            string from;
-            string to;
+            int from;
+            int to;
             int id;
             double dis;
 
@@ -328,8 +330,8 @@ double PACK::post::distance(pack* arr, int count){
             file.close();
             ifstream file("posts.txt");
             if (file.is_open()){
-                while (file >> _name >> _x >> _y) {
-                    if (from == _name){
+                while (file >> _index >> _x >> _y) {
+                    if (from == _index){
                         file.close();
                         x1 = _x;
                         y1 = _y;
@@ -340,8 +342,8 @@ double PACK::post::distance(pack* arr, int count){
             file.close();
             ifstream file1("posts.txt");
             if (file1.is_open()){
-                while (file1 >> _name >> _x >> _y) {
-                    if (to == _name){
+                while (file1 >> _index >> _x >> _y) {
+                    if (to == _index){
                         file1.close();
                         x2 = _x;
                         y2 = _y;
