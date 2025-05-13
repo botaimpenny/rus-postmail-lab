@@ -36,7 +36,7 @@ class post {
     std::vector <int> _packs;//Список посылок внутри отделения
 public:
     post() = default;
-    post(int x, int y, std::vector <int> packs);
+    post(int index, int x, int y, std::vector <int> packs);
     friend std::ostream& operator << (std::ostream & out, post& p);
     friend std::istream& operator >> (std::istream & in, post& p);
     void display();
