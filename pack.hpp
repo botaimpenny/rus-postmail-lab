@@ -45,8 +45,8 @@ public:
 
 std::ostream& operator << (std::ostream & out, const pack& p);
 std::istream& operator >> (std::istream & in, pack& p);
-pack * load(int & count);
-pack * create(int & count);
+pack *load(int &count);
+pack *create(int &count);
 void save(pack *arr, int count);
 void add(pack **arr, int *count);
 void del(pack *arr, int *count);
