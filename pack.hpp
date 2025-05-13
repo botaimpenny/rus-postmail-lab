@@ -30,6 +30,7 @@ public:
 };
 class post {
     std::string _name;
+    int index;
     int _x;//Координата отделения по х
     int _y;//Координата отделения по у
     std::vector <int> _packs;//Список посылок внутри отделения
