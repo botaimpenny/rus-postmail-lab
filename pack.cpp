@@ -2,6 +2,7 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <cmath>
 using namespace std;
 using namespace PACK;
 
