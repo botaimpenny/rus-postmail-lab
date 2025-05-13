@@ -23,6 +23,21 @@ int pack::id() {
 int pack::weight() {
     return _weight;
 }
+pack* PACK::load(int &count) {
+    std::ifstream in("packages.txt");
+    if (!in.is_open()) {
+        cout << "Не удалось открыть файл для чтения." << endl;
+        count = 0;
+        return nullptr; 
+    }
+    in >> count; 
+    pack* arr = new pack[count]; 
+    for (int i = 0; i < count; i++) {
+        in >> arr[i]; 
+    }
+    in.close();
+    return arr; 
+}
 
 pack::pack(string sendname, string getname, string from, string to, int id, int weight) 
     : _sendname(sendname), _getname(getname), _from(from), _to(to), _id(id), _weight(weight) {}
