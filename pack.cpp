@@ -230,27 +230,27 @@ void post::display() {
 }
 
 void post::addpost() {
-    int num;
-    cout << "Введите координату х нового почтового отделения: ";
-    cin >> _x;
-    cout << "Введите координату у нового почтового отделения: ";
-    cin >> _y;
+    int index;
+    cout << "Введите индекс нового почтового отделения: ";
+    cin >> index; 
+    cout << "Введите координату X нового почтового отделения: ";
+    cin >> _x; 
+    cout << "Введите координату Y нового почтового отделения: ";
+    cin >> _y; 
     cout << "Сколько посылок уже находятся в новом почтовом отделении?: ";
     int n;
     cin >> n;
-    for (int i = 0; i < n; i++) {
-        cout << "Введите трекномер: ";
-        cin >> num;
-        _packs.push_back(num);
-    }
-    ofstream file("posts.txt", ios::app);
+ofstream file("posts.txt", ios::app);
     if (file.is_open()) {
-        file << _x << " " << _y << " ";
+        file << index << " " << _x << " " << _y << " "; 
         for (int trak : _packs) {
-            file << trak << " ";
+            file << trak << " "; 
         }
-        file << endl;
+        file << endl; 
         file.close();
+        cout << "Почтовое отделение добавлено успешно." << endl;
+    } else {
+        cout << "Не удалось открыть файл для записи." << endl;
     }
 }
 
