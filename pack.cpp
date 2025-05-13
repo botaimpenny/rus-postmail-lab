@@ -369,3 +369,39 @@ void post::delpost() {
         cout << "Ошибка: Невозможно открыть файл" << endl;
     }
 }
+    void give(pack* arr, int* count){
+        int id;
+        string nameTest;
+        string name;
+        cout << "Введите трек номер: ";
+        cin >> id;
+        for (int i = 0; i < *count; i++) {
+            if (arr[i].id() == id) {
+                nameTest = arr[i].getname();
+            }
+        }
+        cout << "Введите имя получателя: " << endl;
+        cin >> name;
+        if(name == nameTest){
+            cout << "Поссылка получена!" << endl;
+            int index = -1;
+            for (int i = 0; i < *count; i++) {
+                if (arr[i].id() == id) {
+                    index = i;
+                    break;
+                }
+            }
+        
+            if (index == -1) {
+                cout << "Такого трек номера не существует " << endl;
+                return;
+            }
+        
+            for (int i = index; i < *count - 1; i++) {
+                arr[i] = arr[i + 1];
+            }
+            (*count)--;
+            cout << "Посылка удалена." << endl;
+        }
+        
+    }
