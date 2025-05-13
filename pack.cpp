@@ -26,10 +26,15 @@ int pack::weight() {
 pack::pack(string sendname, string getname, string from, string to, int id, int weight) 
     : _sendname(sendname), _getname(getname), _from(from), _to(to), _id(id), _weight(weight) {}
 
-// Перегрузка операторов
+//Сделал норм вид вывода посылок
 ostream& PACK::operator<<(ostream & out, const pack& p) {
-    out << p._sendname << " " << p._getname << " " << p._from << " " << p._to << " " << p._id << " " << p._weight;
-    return out;
+  out << "Имя отправителя: " << p._sendname << ", "
+        << "Имя получателя: " << p._getname << ", "
+        << "Отправочное отделение: " << p._from << ", "
+        << "Приемное отделение: " << p._to << ", "
+        << "Трек номер: " << p._id << ", "
+        << "Вес: " << p._weight << " кг";
+        return out;
 }
 
 istream& PACK::operator>>(istream & in, pack& p) {
