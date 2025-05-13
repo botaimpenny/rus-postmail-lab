@@ -274,5 +274,54 @@ ofstream file("posts.txt", ios::app);
 void post::delpost() {
 
 }
+double PACK::post::distance(pack* arr, int count){
+        ifstream file("packs.txt");
+        if (file.is_open()) {
+            int x1 = 0;
+            int y1 = 0;
+            int x2 = 0;
+            int y2 = 0;
+            string from;
+            string to;
+            int id;
+            double dis;
+
+            cout << "Введите трек номер: ";
+            cin >> id;
+            for (int i = 0; i < count; i++) {
+                if (arr[i].id() == id) {
+                    from = arr[i].from();
+                    to = arr[i].to();
+                }
+            }
+            file.close();
+            ifstream file("posts.txt");
+            if (file.is_open()){
+                while (file >> _name >> _x >> _y) {
+                    if (from == _name){
+                        file.close();
+                        x1 = _x;
+                        y1 = _y;
+                    }
+
+                }
+            }
+            file.close();
+            ifstream file1("posts.txt");
+            if (file1.is_open()){
+                while (file1 >> _name >> _x >> _y) {
+                    if (to == _name){
+                        file1.close();
+                        x2 = _x;
+                        y2 = _y;
+                    }
+
+                }
+            }
+            dis = sqrt(pow((x2 - x1), 2) + pow((y2 - y1), 2));
+            
+            return dis;
+        }
+    }
 
 
