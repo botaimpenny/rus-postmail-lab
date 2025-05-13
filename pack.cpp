@@ -190,17 +190,50 @@ string temp;
 
 void PACK::search(pack* arr, int count) {
     string sendname;
-
-    cout << "Введите имя отправителя: ";
-    cin >> sendname;
-    for (int i = 0; i < count; i++) {
-        if (arr[i].sendname() == sendname) {
-            cout << "Найдена посылка: " << endl;
-            cout << arr[i] << endl;
-            return;
+    string getname;
+    int from;
+    int to;
+    int weight;
+    int id;
+    int ch;
+    cout << "По какому критерию искать?\n1 - Имя отправителя\n2 - Имя получателя\n3 - Трек номер\n" << endl;
+    cin >> ch;
+    switch(ch){
+    case 1:{
+        cout << "Введите имя отправителя: ";
+        cin >> sendname;
+        for (int i = 0; i < count; i++) {
+            if (arr[i].sendname() == sendname) {
+                cout << "Найдена посылка: " << endl;
+                cout << arr[i] << endl;
+                break;
+            }
         }
     }
-    cout << "Ничего не найдено" << endl;
+    case 2:{
+        cout << "Введите имя получателя: ";
+        cin >> getname;
+        for (int i = 0; i < count; i++) {
+            if (arr[i].getname() == getname) {
+                cout << "Найдена посылка: " << endl;
+                cout << arr[i] << endl;
+                break;
+            }
+        }
+    }
+    case 3:{
+        cout << "Введите трек номер посылки: ";
+        cin >> id;
+        for (int i = 0; i < count; i++) {
+            if (arr[i].id() == id) {
+                cout << "Найдена посылка: " << endl;
+                cout << arr[i] << endl;
+                break;
+            }
+        }
+    }
+    default:{
+        break;
 }
 
 void PACK::showList(pack* arr, int count) {
