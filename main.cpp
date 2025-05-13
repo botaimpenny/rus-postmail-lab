@@ -23,6 +23,7 @@ if (arr == nullptr) {
         cout << ("5. Найти посылку\n") << endl;
         cout << ("6. Показать список отделений\n") << endl;
         cout << ("7. Добавить отделение\n") << endl;
+        cout << ("8. Удалить отделение\n") << endl;
         cout << ("0. Выйти\n") << endl;
         cin >> a;
         switch (a) {
@@ -46,6 +47,9 @@ if (arr == nullptr) {
             break;
         case 7:
             post.addpost();
+            break;
+        case 8:
+            post.delpost();
             break;
         case 0:
             cout << "" << endl;
