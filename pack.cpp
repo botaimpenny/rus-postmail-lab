@@ -27,7 +27,6 @@ int pack::weight() {
 pack::pack(string sendname, string getname, string from, string to, int id, int weight) 
     : _sendname(sendname), _getname(getname), _from(from), _to(to), _id(id), _weight(weight) {}
 
-//Сделал норм вид вывода посылок
 ostream& PACK::operator<<(ostream & out, const pack& p) {
   out << "Имя отправителя: " << p._sendname << ", "
         << "Имя получателя: " << p._getname << ", "
@@ -195,32 +194,34 @@ void PACK::showList(pack* arr, int count) {
         cout << "-------------------" << endl;
     }
 }
-
 void post::display() {
     string line;
     ifstream file("posts.txt");
     if (file.is_open()) {
     int n = 1;
         while (getline(file, line)) {
-            istringstream iss(line);      
+            istringstream iss(line); // Используем istringstream для разбора строки            
             int index, x, y;
             vector<int> packs;
+            // Читаем индекс, координаты и трек-номера
             iss >> index >> x >> y;
+            // Читаем трек-номера посылок
             int trak;
             while (iss >> trak) {
                 packs.push_back(trak);
             }
+            // Выводим данные с подписями
             cout << n << ". Индекс почтового отделения: " << index << ", "
                  << "Координата X: " << x << ", "
                  << "Координата Y: " << y << ", "
-                 << "Количество посылок: ";
+                 << "Трек номера посылок: ";
             for (size_t i = 0; i < packs.size(); i++) {
                 cout << packs[i];
                 if (i < packs.size() - 1) {
-                    cout << ", ";
+                    cout << ", "; // Добавляем запятую между трек-номерами
                 }
             }
-            cout << endl; 
+            cout << endl; // Переход на новую строку
             n++;
         }
          cout << "---------------" << endl;
@@ -233,27 +234,32 @@ void post::display() {
 void post::addpost() {
     int index;
     cout << "Введите индекс нового почтового отделения: ";
-    cin >> index; 
+    cin >> index; // Ввод индекса почтового отделения
     cout << "Введите координату X нового почтового отделения: ";
-    cin >> _x; 
+    cin >> _x; // Ввод координаты X
     cout << "Введите координату Y нового почтового отделения: ";
-    cin >> _y; 
+    cin >> _y; // Ввод координаты Y
+    // Ввод количества посылок, находящихся в новом почтовом отделении
     cout << "Сколько посылок уже находятся в новом почтовом отделении?: ";
     int n;
     cin >> n;
 ofstream file("posts.txt", ios::app);
     if (file.is_open()) {
-        file << index << " " << _x << " " << _y << " "; 
+        file << index << " " << _x << " " << _y << " "; // Запись индекса и координат
         for (int trak : _packs) {
-            file << trak << " "; 
+            file << trak << " "; // Запись трек-номеров
         }
-        file << endl; 
+        file << endl; // Переход на новую строку
         file.close();
         cout << "Почтовое отделение добавлено успешно." << endl;
     } else {
         cout << "Не удалось открыть файл для записи." << endl;
     }
 }
+void post::delpost() {
+
+}
+
 
 void post::delpost() {
 
