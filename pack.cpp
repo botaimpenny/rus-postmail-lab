@@ -230,7 +230,6 @@ void post::display() {
             cout << n << ". Индекс почтового отделения: " << index << ", "
                  << "Координата X: " << x << ", "
                  << "Координата Y: " << y << ", "
-                 << "Трек номера посылок: ";
             for (size_t i = 0; i < packs.size(); i++) {
                 cout << packs[i];
                 if (i < packs.size() - 1) {
