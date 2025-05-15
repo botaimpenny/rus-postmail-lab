@@ -31,7 +31,6 @@ pack* PACK::load(int &count) {
         count = 0;
         return nullptr;
     }
-    // Чтение количества посылок
     if (!(in >> count)) {
         cerr << "error: incorrect type of file" << endl;
         count = 0;
@@ -41,8 +40,6 @@ pack* PACK::load(int &count) {
         cerr << "incorrect amount of packages: " << count << endl;
         return nullptr;
     }
-
-    // Выделение памяти
     pack* arr = new (nothrow) pack[count];
     if (!arr) {
         cerr << "error: cant fill memory for " << count << "packages" << endl;
@@ -50,7 +47,6 @@ pack* PACK::load(int &count) {
         return nullptr;
     }
 
-    // Чтение посылок
     for (int i = 0; i < count; ++i) {
         if (!(in >> arr[i])) {
             cerr << "error: cant read #" << i+1 << endl;
