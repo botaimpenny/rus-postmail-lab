@@ -358,48 +358,33 @@ double PACK::post::distance(pack* arr, int count){
     }
 
 void post::delpost() {
-    int count = 0;
-    int index;
-    ifstream file("posts.txt");
-    if (file.is_open()) {
-        while (file >> index >> _x >> _y) {
-            count++;
-        }
+    vector<string> lines;
+    string line;
+    
+    // Чтение файла
+    ifstream in("posts.txt");
+    while (getline(in, line)) {
+        lines.push_back(line);
     }
-    else{
-        cout << "Ошибка: Невозможно открыть файл" << endl;
-    }
-    post *arr = new post[count];
-    cout << "-------------------------------" << endl;
-    ifstream f("posts.txt");
-    if (f.is_open()){
-        for(int i = 1; i < count+1; i++){
-            f >> index >> _x >> _y;
-            cout << i << ")" << "Индекс почтового отделения:  " << index << "Координата по Х: " << _x << "Координата по У: " << _y << " " << endl;
-        }
-}
-    else{
-        cout << "Ошибка: Невозможно открыть файл почтовых отделений" << endl;
-    }
-    f.close();
-    file.close();
-    cout << "-------------------------------" <<endl;
-    cout << "Укажите номер почтового отделения для удаления: ";
-    int num;
-    cin >> num;
-    ofstream file1("posts.txt");
-    if (file1.is_open()){
-        for(int i = 0; i < count; i++){
-            if(i == num){
-            }
+    in.close();
 
-      else{
-    file1 << index << " " << _x << " " << _y << " " << "\n";
-            }
-        }
+    // Вывод списка
+    for (size_t i = 0; i < lines.size(); ++i) {
+        cout << i+1 << ") " << lines[i] << endl;
     }
-    else{
-        cout << "Ошибка: Невозможно открыть файл" << endl;
+
+    // Удаление
+    cout << "Введите номер для удаления: ";
+    size_t num;
+    cin >> num;
+    if (num > 0 && num <= lines.size()) {
+        lines.erase(lines.begin() + num - 1);
+    }
+
+    // Запись обратно
+    ofstream out("posts.txt");
+    for (const auto& l : lines) {
+        out << l << endl;
     }
 }
     void give(pack* arr, int* count){
