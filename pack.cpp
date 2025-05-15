@@ -277,7 +277,7 @@ void post::display() {
     if (file.is_open()) {
     int n = 1;
         while (getline(file, line)) {
-            istringstream iss(line); // Используем istringstream для разбора строки            
+            istringstream iss(line);          
             int index, x, y;
             vector<int> packs;
             // Читаем индекс, координаты и трек-номера
@@ -294,10 +294,10 @@ void post::display() {
             for (size_t i = 0; i < packs.size(); i++) {
                 cout << packs[i];
                 if (i < packs.size() - 1) {
-                    cout << ", "; // Добавляем запятую между трек-номерами
+                    cout << ", ";
                 }
             }
-            cout << endl; // Переход на новую строку
+            cout << endl;
             n++;
         }
          cout << "---------------" << endl;
@@ -312,20 +312,18 @@ void post::addpost() {
     cin >> _name;
     int index;
     cout << "Введите индекс нового почтового отделения: ";
-    cin >> index; // Ввод индекса почтового отделения
+    cin >> index;
     cout << "Введите координату X нового почтового отделения: ";
-    cin >> _x; // Ввод координаты X
+    cin >> _x;
     cout << "Введите координату Y нового почтового отделения: ";
-    cin >> _y; // Ввод координаты Y
-    int n;
-    cin >> n;
+    cin >> _y;
 ofstream file("posts.txt", ios::app);
     if (file.is_open()) {
-        file << index << " " << _x << " " << _y << " "; // Запись индекса и координат
+        file << index << " " << _x << " " << _y << " ";
         for (int trak : _packs) {
-            file << trak << " "; // Запись трек-номеров
+            file << trak << " ";
         }
-        file << endl; // Переход на новую строку
+        file << endl;
         file.close();
         cout << "Почтовое отделение добавлено успешно." << endl;
     } else {
@@ -387,19 +385,16 @@ void post::delpost() {
     vector<string> lines;
     string line;
     
-    // Чтение файла
     ifstream in("posts.txt");
     while (getline(in, line)) {
         lines.push_back(line);
     }
     in.close();
 
-    // Вывод списка
     for (size_t i = 0; i < lines.size(); ++i) {
         cout << i+1 << ") " << lines[i] << endl;
     }
 
-    // Удаление
     cout << "Введите номер для удаления: ";
     size_t num;
     cin >> num;
@@ -407,7 +402,6 @@ void post::delpost() {
         lines.erase(lines.begin() + num - 1);
     }
 
-    // Запись обратно
     ofstream out("posts.txt");
     for (const auto& l : lines) {
         out << l << endl;
