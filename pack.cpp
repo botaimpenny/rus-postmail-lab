@@ -25,19 +25,45 @@ int pack::weight() {
     return _weight;
 }
 pack* PACK::load(int &count) {
-    std::ifstream in("packages.txt");
+    ifstream in("packages.txt");
     if (!in.is_open()) {
-        cout << "Не удалось открыть файл для чтения." << endl;
+        cerr << "error: cant open packages.txt" << endl;
         count = 0;
-        return nullptr; 
+        return nullptr;
     }
-    in >> count; 
-    pack* arr = new pack[count]; 
-    for (int i = 0; i < count; i++) {
-        in >> arr[i]; 
+    // Чтение количества посылок
+    if (!(in >> count)) {
+        cerr << "error: incorrect type of file" << endl;
+        count = 0;
+        return nullptr;
+    }
+    if (count <= 0) {
+        cerr << "incorrect amount of packages: " << count << endl;
+        return nullptr;
+    }
+
+    // Выделение памяти
+    pack* arr = new (nothrow) pack[count];
+    if (!arr) {
+        cerr << "error: cant fill memory for " << count << "packages" << endl;
+        count = 0;
+        return nullptr;
+    }
+
+    // Чтение посылок
+    for (int i = 0; i < count; ++i) {
+        if (!(in >> arr[i])) {
+            cerr << "error: cant read #" << i+1 << endl;
+            delete[] arr;  // Освобождаем память при ошибке
+            count = 0;
+            return nullptr;
+        }
+ else{
+     in >> arr[i];
+ }
     }
     in.close();
-    return arr; 
+    return arr;
 }
 
 pack::pack(string sendname, string getname, int from, int to, int id, int weight) 
