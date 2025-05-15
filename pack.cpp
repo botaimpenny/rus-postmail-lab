@@ -161,11 +161,11 @@ string temp;
     cout << "Введите новое имя получателя: " << endl;
     cin >> temp;
     arr[index].setGetname(temp);
-    int from = 0
+    int from = 0;
     cout << "Введите новое отделение почты, откуда едет посылка: " << endl;
     cin >> from;
     arr[index].setFrom(from);
-    int to = 0
+    int to = 0;
     cout << "Введите новое отделение почты, куда едет посылка: " << endl;
     cin >> to;
     arr[index].setTo(to);
@@ -330,8 +330,8 @@ double PACK::post::distance(pack* arr, int count){
             file.close();
             ifstream file("posts.txt");
             if (file.is_open()){
-                while (file >> _index >> _x >> _y) {
-                    if (from == _index){
+                while (file >> index >> _x >> _y) {
+                    if (from == index){
                         file.close();
                         x1 = _x;
                         y1 = _y;
@@ -342,8 +342,8 @@ double PACK::post::distance(pack* arr, int count){
             file.close();
             ifstream file1("posts.txt");
             if (file1.is_open()){
-                while (file1 >> _index >> _x >> _y) {
-                    if (to == _index){
+                while (file1 >> index >> _x >> _y) {
+                    if (to == index){
                         file1.close();
                         x2 = _x;
                         y2 = _y;
