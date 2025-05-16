@@ -21,7 +21,7 @@ int main() {
 
         switch (a) {
         case 1:
-            add(arr, &count);
+            add(&arr, &count);
             break;
         case 2:
             post.addpost();
@@ -56,4 +56,3 @@ int main() {
 
     return 0;
 }
-
