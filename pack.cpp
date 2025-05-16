@@ -1,4 +1,8 @@
-    #include "pack.hpp"
+/**
+ * @file pack.cpp
+ * @brief Реализация методов классов и функций для работы с почтовыми посылками и отделениями.
+*/
+#include "pack.hpp"
     #include <fstream>
     #include <sstream>
     #include <iostream>
@@ -6,7 +10,16 @@
     using namespace std;
     using namespace PACK;
     
-    // Реализация методов класса pack
+    /**
+ * @brief Конструктор класса pack.
+ * @param sendname Имя отправителя.
+ * @param getname Имя получателя.
+ * @param from Индекс отправочного отделения.
+ * @param to Индекс приемного отделения.
+ * @param weight Вес посылки.
+ * @param id Трек-номер.
+ * @param remainingTime Оставшееся время доставки.
+ */
     pack::pack(string sendname, string getname, int from, int to, int weight, int id, int remainingTime)
         : _sendname(sendname), _getname(getname), _from(from), _to(to), _weight(weight), _id(id), _remainingTime(0) {
     }
@@ -19,7 +32,12 @@
     int pack::id() { return _id; }
     int pack::remainingTime() const{ return _remainingTime; }
     void pack::setRemainingTime(int time) { _remainingTime = time; }
-    
+    /**
+ * @brief Оператор вывода для класса pack.
+ * @param out Поток вывода.
+ * @param p Объект класса pack.
+ * @return Поток вывода.
+ */
     ostream& operator<<(ostream& out, const pack& p) {
         out << " " << p._sendname << " "
             << " " << p._getname << " "
@@ -29,13 +47,22 @@
             << " " << p._weight << " ";
         return out;
     }
-    
+    /**
+ * @brief Оператор ввода для класса pack.
+ * @param in Поток ввода.
+ * @param p Объект класса pack.
+ * @return Поток ввода.
+ */
     istream& operator>>(istream& in, pack& p) {
         in >> p._sendname >> p._getname >> p._from >> p._to >> p._id >> p._weight;
         return in;
     }
     
-    // Загрузка данных из файла
+    /**
+ * @brief Загружает данные о посылках из файла.
+ * @param count Ссылка на переменную, в которую будет записано количество посылок.
+ * @return Указатель на массив посылок.
+ */
     pack* PACK::load(int& count) {
         ifstream in("packages.txt");
         if (!in.is_open()) {
@@ -59,7 +86,11 @@
         return arr;
     }
     
-    // Сохранение данных в файл
+    /**
+ * @brief Сохраняет данные о посылках в файл.
+ * @param arr Указатель на массив посылок.
+ * @param count Количество посылок.
+ */
     void PACK::save(pack* arr, int count) {
         ofstream out("packages.txt");
         out << count << endl;
@@ -74,7 +105,11 @@
         }
         out.close();
     }
-    
+    /**
+ * @brief Добавляет новую посылку.
+ * @param arr Указатель на массив посылок.
+ * @param count Указатель на переменную с количеством посылок.
+ */
 void PACK::add(pack** arr, int* count) {
     pack* temp = new pack[*count + 1];
     for (int i = 0; i < *count; i++) {
@@ -104,7 +139,10 @@ void PACK::add(pack** arr, int* count) {
     *arr = temp;
     (*count)++;
 }
-    // Удаление посылки
+    /**
+ * @brief Удаляет посылку.
+ * @param arr Указатель на массив посылок.
+ */
     void PACK::del(pack* arr, int* count) {
         int id;
         cout << "Введите трек-номер для удаления: ";
@@ -126,6 +164,9 @@ void PACK::add(pack** arr, int* count) {
         (*count)--;
         cout << "Посылка удалена." << endl;
     }
+/**
+ * @brief Показывает отделения почты.
+ */
     void post::display() {
         string line;
         ifstream file("posts.txt");
@@ -159,6 +200,10 @@ void PACK::add(pack** arr, int* count) {
         } else {
             cout << "Не удалось открыть файл." << endl;
         }}
+/**
+ * @brief Добавляет новое отделение.
+
+ */
     void post::addpost() {
         cout << "Введите название нового почтового отделения: ";
         cin >> _name;
@@ -180,7 +225,9 @@ void PACK::add(pack** arr, int* count) {
             cout << "Не удалось открыть файл для записи\n" << endl;
         }
     }
-    // Расчет времени пути посылки
+    /**
+ * @brief Рассчитывает время пути
+ */
     double post::distance(pack* arr, int count, int id) {
         ifstream file("posts.txt");
         if (!file.is_open()) {
@@ -233,6 +280,9 @@ void PACK::add(pack** arr, int* count) {
         cout << "Время доставки: " << time << " дней" << endl;
         return time;
     }
+/**
+ * @brief Удаляет отделение
+ */
     void post::delpost(pack* arr, int count) {
         vector<string> lines;
         string line;
@@ -287,7 +337,9 @@ void PACK::add(pack** arr, int* count) {
             cout << "Неверный номер отделения." << endl;
         }
     }
-    
+    /**
+ * @brief Выдает посылку
+ */
     void PACK::give(pack* arr, int* count){
             int id;
             string nameTest;
@@ -325,6 +377,9 @@ void PACK::add(pack** arr, int* count) {
             }
     
         }
+/**
+ * @brief Перематывает время(должна)
+ */
     void PACK::advanceTime(pack* arr, int count) {
         for (int i = 0; i < count; i++) {
             int remainingTime = arr[i].remainingTime(); // Получаем текущее оставшееся время
