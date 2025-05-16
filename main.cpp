@@ -1,63 +1,59 @@
 #include "pack.hpp"
 using namespace std;
 using namespace PACK;
+
 int main() {
     post post;
-    pack *arr = nullptr;
+    pack* arr = nullptr;
     int count = 0;
     int a;
-    // Вызов функции load для загрузки данных из файла
-arr = load(count); // Загрузка данных из файла
-// Проверка, была ли загружена хотя бы одна посылка
-if (arr == nullptr) {
-    cout << "Не удалось загрузить посылки. Начинаем с пустого списка." << endl;
-} else {
-    cout << "Загружено " << count << " посылок." << endl;
-}
+
     do {
-        //убрал load птмчт хрен пойми че он делает, тупо занулял все значения посылок
-        cout << ("1. Показать список посылок\n") << endl;
-        cout << ("2. добавить посылку\n") << endl;
-        cout << ("3. Удалить посылку\n") << endl;
-        cout << ("4. Изменить данные посылки\n") << endl;
-        cout << ("5. Найти посылку\n") << endl;
-        cout << ("6. Показать список отделений\n") << endl;
-        cout << ("7. Добавить отделение\n") << endl;
-        cout << ("8. Удалить отделение\n") << endl;
-        cout << ("0. Выйти\n") << endl;
+        cout << "1. Отправить посылку\n"
+            << "2. Добавить отделение\n"
+            << "3. Удалить отделение\n"
+            << "4. Узнать информацию о отделении\n"
+            << "5. Отследить посылку по трек номеру\n"
+            << "6. Выдать посылку\n"
+            << "7. Пропуск времени\n"
+            << "0. Выйти\n";
         cin >> a;
+
         switch (a) {
         case 1:
-            showList(arr, count);
+            add(arr, &count);
             break;
         case 2:
-            add(&arr, &count);
-            break;
-        case 3:
-            del(arr, &count);
-            break;
-        case 4:
-            edit(arr, count);
-            break;
-        case 5:
-            search(arr, count);
-            break;
-        case 6:
-            post.display();
-            break;
-        case 7:
             post.addpost();
             break;
-        case 8:
-            post.delpost();
+        case 3:
+            post.delpost(arr, count);
+            break;
+        case 4:
+            post.display();
+            break;
+        case 5:
+            cout << "Введите трек номер: ";
+            int id;
+            cin >> id;
+            post.distance(arr, count, id);
+            break;
+        case 6:
+            give(arr, &count);
+            break;
+        case 7:
+            advanceTime(arr, count);
             break;
         case 0:
-            cout << "" << endl;
+            cout << "Выход из программы." << endl;
             save(arr, count);
             delete[] arr;
             break;
         default:
-            printf("hz \n");
+            cout << "Неверный ввод. Пожалуйста, попробуйте снова." << endl;
         }
     } while (a != 0);
-    return 0;}
+
+    return 0;
+}
+
