@@ -60,7 +60,7 @@ namespace PACK {
 
     pack* load(int& count);
     void save(pack* arr, int count);
-    void add(pack* arr, int* count);
+    void add(pack** arr, int* count);
     void del(pack* arr, int* count);
     void edit(pack* arr, int count);
     void search(pack* arr, int count);
