@@ -1,7 +1,14 @@
+/**
+ * @file main.cpp
+ * @brief Главный файл программы, реализующий пользовательский интерфейс для работы с почтовой системой.
+ */
 #include "pack.hpp"
 using namespace std;
 using namespace PACK;
-
+/**
+ * @brief Точка входа в программу.
+ * @return Код завершения программы.
+ */
 int main() {
     post post;
     pack* arr = nullptr;
