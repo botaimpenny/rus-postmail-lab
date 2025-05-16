@@ -21,12 +21,12 @@
     void pack::setRemainingTime(int time) { _remainingTime = time; }
     
     ostream& operator<<(ostream& out, const pack& p) {
-        out << "Имя отправителя: " << p._sendname << ", "
-            << "Имя получателя: " << p._getname << ", "
-            << "Отправочное отделение: " << p._from << ", "
-            << "Приемное отделение: " << p._to << ", "
-            << "Трек номер: " << p._id << ", "
-            << "Вес: " << p._weight << " кг";
+        out << " " << p._sendname << " "
+            << " " << p._getname << " "
+            << " " << p._from << " "
+            << " " << p._to << " "
+            << " " << p._id << " "
+            << " " << p._weight << " ";
         return out;
     }
     
@@ -75,43 +75,35 @@
         out.close();
     }
     
-    // Добавление посылки
-    void PACK::add(pack* arr, int* count) {
-        pack* temp = new pack[*count + 1];
-        for (int i = 0; i < *count; i++) {
-            temp[i] = (arr)[i];
-        }
-        string sendname, getname;
-        int from, to, id, weight;
-        cout << "Введите имя отправителя: ";
-        cin >> sendname;
-        cout << "Введите имя получателя: ";
-        cin >> getname;
-        cout << "Введите отправочное отделение: ";
-        cin >> from;
-        cout << "Введите приемное отделение: ";
-        cin >> to;
-        cout << "Введите трек-номер: ";
-        cin >> id;
-        cout << "Введите вес: ";
-        cin >> weight;
-        //int remainingTime = (PACK::post::distance(arr, count));
-        temp[*count].setSendname(sendname);
-        temp[*count].setGetname(getname);
-        temp[*count].setFrom(from);
-        temp[*count].setTo(to);
-        temp[*count].setId(id);
-        temp[*count].setWeight(weight);
-        //temp[*count].setRemainingTime(remainingTime);
-        //int a;
-        //cin>> a;
-        //int remainingTime = static_cast<int>(post::distance(arr, *count, id));
-        //temp[*count].setRemainingTime(remainingTime);
-        delete[]  arr;
-        arr = temp;
-        (*count)++;
+void PACK::add(pack** arr, int* count) {
+    pack* temp = new pack[*count + 1];
+    for (int i = 0; i < *count; i++) {
+        temp[i] = (*arr)[i];
     }
-    
+    string sendname, getname;
+    int from, to, id, weight;
+    cout << "Введите имя отправителя: ";
+    cin >> sendname;
+    cout << "Введите имя получателя: ";
+    cin >> getname;
+    cout << "Введите отправочное отделение: ";
+    cin >> from;
+    cout << "Введите приемное отделение: ";
+    cin >> to;
+    cout << "Введите трек-номер: ";
+    cin >> id;
+    cout << "Введите вес: ";
+    cin >> weight;
+    temp[*count].setSendname(sendname);
+    temp[*count].setGetname(getname);
+    temp[*count].setFrom(from);
+    temp[*count].setTo(to);
+    temp[*count].setId(id);
+    temp[*count].setWeight(weight);
+    delete[] * arr;
+    *arr = temp;
+    (*count)++;
+}
     // Удаление посылки
     void PACK::del(pack* arr, int* count) {
         int id;
@@ -177,10 +169,10 @@
         cin >> _x; // Ввод координаты X
         cout << "Введите координату Y нового почтового отделения: ";
         cin >> _y; // Ввод координаты Y
-    
+
         ofstream file("posts.txt", ios::app);
         if (file.is_open()) {
-            file << index << " " << _x << " " << _y << " "; // Запись индекса и координат
+            file << index << " " << _x << " " << _y << "\n"; // Запись индекса и координат
         file.close();
         cout << "Почтовое отделение добавлено успешно\n" << endl;
         }
@@ -309,6 +301,7 @@
             }
             cout << "Введите имя получателя: " << endl;
             cin >> name;
+	   // cout << id << endl;
             if(name == nameTest){
                 cout << "Поссылка получена!" << endl;
                 int index = -1;
@@ -326,6 +319,7 @@
                 for (int i = index; i < *count - 1; i++) {
                     arr[i] = arr[i + 1];
                 }
+		cout << id << endl;
                 (*count)--;
                 cout << "Посылка удалена." << endl;
             }
