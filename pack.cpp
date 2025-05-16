@@ -106,7 +106,32 @@ void PACK::add(pack** arr, int* count) {
     delete[] * arr;
     *arr = temp;
     (*count)++;
-}
+    vector<string> lines;
+        ifstream in("posts.txt");
+        string line;
+        while (getline(in, line)) {
+            lines.push_back(line);
+        }
+        in.close();
+
+        ofstream out("posts.txt");
+        bool updated = false;
+        for (auto& l : lines) {
+            istringstream iss(l);
+            int index, x, y;
+            iss >> index >> x >> y;
+
+            if (index == from) {
+                l += " " + to_string(id); // Добавляем трек-номер
+                updated = true;
+            }
+            out << l << endl;
+        }
+        out.close();
+        if (!updated) {
+            cout << "Отделение не найдено, трек-номер не добавлен." << endl;
+        }
+    }
 
 // Удаление посылки
 void PACK::del(pack* arr, int* count) {
@@ -334,4 +359,3 @@ void PACK::advanceTime(pack* arr, int count) {
         }
     }
 }
-
